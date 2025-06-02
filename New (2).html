@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<title>شاشة تحميل السيرفر</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Cairo', sans-serif, sans-serif;
+    color: white;
+    overflow: hidden;
+  }
+
+  .loading-screen {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://cdn.discordapp.com/attachments/1260215060006043650/1379171283509575831/20250516_141719.jpg?ex=683f44d9&is=683df359&hm=af4af47405bb4d5d258253642f80495c9b84f187d78585106df082a3caf68007&') no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 80px;
+    user-select: none;
+  }
+
+  .tips-container {
+    width: 80%;
+    max-width: 600px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 0 10px #000000aa;
+  }
+
+  .progress-bar {
+    width: 80%;
+    max-width: 600px;
+    height: 25px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px #000000aa;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #28a745, #85e085);
+    border-radius: 15px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px #28a745;
+  }
+
+  /* نص صغير تحت */
+  .loading-text {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #b7e1b7;
+    text-shadow: 0 0 4px #1b4d1b;
+  }
+</style>
+</head>
+<body>
+
+<div class="loading-screen">
+  <div class="tips-container" id="tip-text">جاري التحميل...</div>
+  <div class="progress-bar">
+    <div class="progress-bar-inner" id="progress-bar"></div>
+  </div>
+  <div class="loading-text" id="loading-percent">0%</div>
+</div>
+
+<script>
+  const tips = [
+    "تأكد من تحديث اللعبة لأحدث نسخة.",
+    "يمكنك استخدام الدردشة لطلب المساعدة.",
+    "احرص على احترام قوانين السيرفر.",
+    "قم بزيارة متجرنا لشراء أدوات حصرية.",
+    "لا تنسى تسجيل دخولك ببطاقتك الخاصة.",
+    "شارك في الفعاليات اليومية واربح جوائز.",
+    "جرب قيادة السيارات المختلفة واستمتع بالرحلة."
+  ];
+
+  const tipText = document.getElementById('tip-text');
+  const progressBar = document.getElementById('progress-bar');
+  const loadingPercent = document.getElementById('loading-percent');
+
+  let tipIndex = 0;
+  let progress = 0;
+
+  // تحديث النص النصي كل 5 ثواني
+  setInterval(() => {
+    tipIndex = (tipIndex + 1) % tips.length;
+    tipText.textContent = tips[tipIndex];
+  }, 5000);
+
+  // محاكاة تقدم التحميل
+  const loadingInterval = setInterval(() => {
+    progress += Math.random() * 5; // زيادة عشوائية بين 0 و 5
+    if(progress > 100) progress = 100;
+
+    progressBar.style.width = progress + '%';
+    loadingPercent.textContent = Math.floor(progress) + '%';
+
+    if(progress >= 100) {
+      clearInterval(loadingInterval);
+      tipText.textContent = "تم التحميل بنجاح! جاري الدخول...";
+      // هنا ممكن تضيف تنفيذ إجراء بعد انتهاء التحميل
+    }
+  }, 300);
+</script>
+
+</body>
+</html>
